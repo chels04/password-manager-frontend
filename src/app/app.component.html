@@ -2,11 +2,18 @@
   <h1>Password Manager</h1>
   <button class="btn btn-primary mb-3" (click)="openAddDialog()">Add Password</button>
 
-  <app-password-table [passwords]="passwords"></app-password-table>
+  <app-password-table 
+    [passwords]="passwords"
+    (delete)="deletePassword($event)"
+    (edit)="openEditDialog($event)">>
+    (showPassword)="toggleShowPassword($event)">
+  </app-password-table>
 
   <app-add-password-dialog
     *ngIf="showAddDialog"
-    (add)="addPassword($event)"
+    [model]="editedPassword"
+    (add)="addOrUpdatePassword($event)"
+    (update)="addOrUpdatePassword($event)"
     (close)="closeAddDialog()">
   </app-add-password-dialog>
 </div>
