@@ -4,8 +4,9 @@
 
   <app-password-table 
     [passwords]="passwords"
+    [decryptedPasswords]="decryptedPasswords"
     (delete)="deletePassword($event)"
-    (edit)="openEditDialog($event)">>
+    (edit)="openEditDialog($event)"
     (showPassword)="toggleShowPassword($event)">
   </app-password-table>
 
