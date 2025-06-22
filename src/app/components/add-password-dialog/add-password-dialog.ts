@@ -21,6 +21,8 @@ export class AddPasswordDialog {
     password: ''
   };
 
+  showPassword = false;
+
   ngOnChanges(changes: SimpleChanges): void {
     console.log('ngOnChanges fired:', changes);
     if (changes['model']) {
@@ -30,7 +32,7 @@ export class AddPasswordDialog {
 
   private resetInternalModel() {
     this.internalModel = this.model
-      ? { ...this.model }
+      ? { ...this.model, password: '' } 
       : {
           id: 0,
           category: '',
@@ -38,6 +40,7 @@ export class AddPasswordDialog {
           userName: '',
           password: ''
         };
+    this.showPassword = false;
   }
 
   closeDialog() {
@@ -45,8 +48,19 @@ export class AddPasswordDialog {
   }
 
   onSubmit() {
-      if (this.model) {
-      this.update.emit(this.internalModel); 
+    if (!this.model && !this.internalModel.password) {
+      alert('Password is required!');
+      return;
+    }
+    if (this.model) {
+      // Wenn Passwort leer, Feld komplett entfernen
+      const updated: PasswordItem = {
+        ...this.internalModel
+      };
+      if (!this.internalModel.password) {
+        delete (updated as any).password;
+      }
+      this.update.emit(updated); 
     } else {
       this.add.emit(this.internalModel);  
     }
