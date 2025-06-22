@@ -52,6 +52,10 @@ export class AddPasswordDialog {
       alert('Password is required!');
       return;
     }
+    if (this.internalModel.password && /\s/.test(this.internalModel.password)) {
+      alert('no spaces allowed in password');
+      return;
+    }
     if (this.model) {
       // Wenn Passwort leer, Feld komplett entfernen
       const updated: PasswordItem = {
